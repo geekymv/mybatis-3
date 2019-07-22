@@ -90,6 +90,10 @@ public class XMLConfigBuilder extends BaseBuilder {
     this.parser = parser;
   }
 
+  /**
+   * 解析配置文件，返回Configuration 对象，包含配置信息
+   * @return
+   */
   public Configuration parse() {
     if (parsed) {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
@@ -371,6 +375,7 @@ public class XMLConfigBuilder extends BaseBuilder {
             ErrorContext.instance().resource(resource);
             InputStream inputStream = Resources.getResourceAsStream(resource);
             XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
+            // 解析 mybatis-config.xml 的 <mappers> 标签下 xxxmapper.xml文件
             mapperParser.parse();
           } else if (resource == null && url != null && mapperClass == null) {
             ErrorContext.instance().resource(url);

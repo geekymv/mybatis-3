@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.apache.ibatis.sample.ProductMapper">
+
+    <insert id="insertProduct">
+        insert into t_product(product_id, product_name) values(#{productId}, #{productName})
+    </insert>
+
+    <select id="queryProduct" resultType="org.apache.ibatis.sample.Product">
+      select product_id,  product_name, product_status from t_product where product_id = #{productId}
+    </select>
+
+    <select id="queryByPage" resultType="org.apache.ibatis.sample.Product">
+        select product_id,  product_name, product_status from t_product
+        <where>
+            <!-- mybatis 字符串比较 -->
+            <if test='productStatus == "1"'>
+                product_status = #{productStatus}
+            </if>
+        </where>
+    </select>
+
+</mapper>
